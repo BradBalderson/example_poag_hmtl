@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>ASR</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <link rel="stylesheet" href="css/biojs_alignment.css">
+        
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+        <div id="poag">
+
+        </div>
+        <div id="initial-poag-str" style="display: none;">
+           
+        
+        </div>
+         <div id="n4" style="display: none;">
+        
+             
+         </div>
+        <div id="n9" style="display: none;">
+           
+            
+        </div>
+        <script src="js/colour_defs.js"></script>
+        <script src="js/graph_options.js"></script>
+        <script src="js/index.js"></script>
+        <script src="js/draw.js"></script>
+        <script src="js/graph_overlay.js"></script>
+        <script src="js/merge_poag.js"></script>
+
+        <script type="text/javascript">
+            // The script which runs and calls the visualisation code 
+            // to draw everything.
+            mutants = 0;
+            drawMutants = false;
+            // ----------- start initial setup ---------------------------//
+            json_str = document.getElementById("initial-poag-str").innerHTML; // copy and paste the string from file initial_poag_string.txt
+            var options = setup_options("poag");
+            options = set_poag_data(options, json_str);
+            options = create_poags(options);
+            // ------------ end initial setup ----------------------------//
+            
+            
+            // ------------- Add joint reconstructions -------------------//
+            var poag_json_n4 = document.getElementById("n4").innerHTML;; // Copy and paste the multi_poag_string.txt here
+            add_new_poag(poag_json_n4, "");
+            
+            // uncomment for a fourth one
+             var poag_json_n9 = document.getElementById("n9").innerHTML;; // Copy and paste the multi_poag_string.txt here
+             add_new_poag(poag_json_n9, "");    
+            
+            //------------- Draw --------------------------------------//
+            display();
+            
+            // Now you have the data structure, you can work from the 
+            // merge_poag.js file in the js folder.
+            
+        </script>
+    </body>
+</html>
