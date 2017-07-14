@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fused Poag Legend</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+</head>
+
+<body>
+
+    <script>
+       
+	//looking at data binding, so far:
+
+	//DOM elements < data elements -- (enter) selection, place holders for data element that does not have a corresponding DOM element
+	//DOM elements > data elements -- (exit) selection, place holders for each DOM element that does not have correpsoning dataelement
+	//DOM element = data elements -- (update) selection, equal number of DOM and data elements, this is just the .selectAll part!
+	
+	//var data = [10,20];
+
+	var colors = {"poag1": "red", "poag2": "blue", "poag3": "yellow", "poag4": "orange", "poag5": "green"};
+	
+	//creating our canvas object
+	var canvas = d3.select("body")
+			.append("svg")
+			.attr("width", 200)
+			.attr("height", 200);
+	
+	create_legend(canvas, colors);
+
+	/*
+	* Creates legend and displays on canvas based on color object
+	*/
+	function create_legend(canvas, poagColors){
+		
+	    //converting poagColors object to array d3 can use
+	    var colors = [];
+	    for (var poag in poagColors){
+
+		var poagDetails = {};
+		poagDetails[poag] = poagColors[poag];
+		colors.push(poagDetails);
+	    }
+
+
+	    //adding the coloured rectangles
+	    var rectangles = canvas.selectAll("rect")
+					 .data(colors)
+					 .enter()
+					 .append("rect")
+					    .attr("width", 20) //using scale to determine bar width
+			    		    .attr("height", 20)
+			    		    .attr("x", function(d, i) { return i*30 }) //this line line separates out the bars so can see them, 				otherwise place on top of one another.
+			    		    .attr("fill", function(d, i) { return d["poag" + (i+1)] });
+
+	   rectangles.attr("transform", "translate(30, 0)");
+
+	   //adding the labels for the coloured rectangles
+	   var labels = canvas.selectAll("text")
+				.data(colors)
+				.enter()
+				.append("text");
+
+	   var labelDetails = labels
+				.attr("x", function(d, i) { return i*30 })
+				.attr("y", function(d, i) { return 5; })
+				.text( function(d) { 
+					for (var poag in d){
+					    return poag;
+					}
+				     })
+				.attr("font-family", "sans-serif")
+				.attr("font-size", "5px")
+				.attr("fill", "black");
+
+	  labels.attr("transform", "translate(30, 21)");
+
+	  //adding key label
+	  var keyLabel = canvas.append("text")
+				  .attr("x", 0)
+				  .attr("y", 10)
+				  .text("Key:")
+				  .attr("font-family", "sans-serif")
+				  .attr("font-size", "10px")
+				  .attr("fill", "black")
+				  .style("stroke", "#100");	
+	
+	}
+
+
+	/*
+	//now we have already existing circle!
+	var circle1 = canvas.append("circle")
+				.attr("cx", 100)
+				.attr("cy", 100)
+				.attr("fill", "red")
+				.attr("r", 25);
+	
+	//now we have already existing circle!
+	var circle2 = canvas.append("circle")
+				.attr("cx", 50)
+				.attr("cy", 100)
+				.attr("fill", "red")
+				.attr("r", 25);
+
+
+	//circle place holders for each of our data that does not have corresponding DOM element example!!!
+	var circle = canvas.selectAll("circle") //if no circle present, then just acts as place holder for circle! But if circle already present, then will need to make a all to exit in order to bind a data element to the circle! We can add another element though which will result in another circle since it will then create a place holder for that data element, allowing enter to bind a new DOM to that data element.
+			.attr("fill", "blue")//this is the update part!!!!
+			.data(data)
+			.enter()//if circle already made
+				.append("circle")
+				.attr("cx", 100)
+				.attr("cy", 100)
+				.attr("fill", "green")
+				.attr("r", 25);*/
+						
+
+    </script>
+
+</body>
+
+</html>

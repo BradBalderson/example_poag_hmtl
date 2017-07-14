@@ -22,24 +22,15 @@ and open the template in the editor.
         <div id="poag">
 
         </div>
-        <div id="initial-poag-str" style="display: none;">
-           
         
-        </div>
-         <div id="n4" style="display: none;">
-        
-             
-         </div>
-        <div id="n9" style="display: none;">
-           
-            
-        </div>
         <script src="js/colour_defs.js"></script>
         <script src="js/graph_options.js"></script>
         <script src="js/index.js"></script>
         <script src="js/draw.js"></script>
-        <script src="js/graph_overlay.js"></script>
-        <script src="js/merge_poag.js"></script>
+        <script src="js/graph_overlay.js"></script>,
+	<script src="js/merge_nodeMethods.js"></script>
+	<script src="js/merge_edgeMethods.js"></script>
+	<script src="js/asr.js"></script>
 
         <script type="text/javascript">
             // The script which runs and calls the visualisation code 
@@ -55,12 +46,28 @@ and open the template in the editor.
             
             
             // ------------- Add joint reconstructions -------------------//
-            var poag_json_n4 = document.getElementById("n4").innerHTML;; // Copy and paste the multi_poag_string.txt here
-            add_new_poag(poag_json_n4, "");
+              var poag_json_n4 = document.getElementById("n4").innerHTML; // Copy and paste the multi_poag_string.txt here
+              add_new_poag(poag_json_n4, "");
+
+	      //var options = setup_options("poag");
+              //options = set_poag_data(options, poag_json_n4);
+              //options = create_poags(options);
             
             // uncomment for a fourth one
-             var poag_json_n9 = document.getElementById("n9").innerHTML;; // Copy and paste the multi_poag_string.txt here
-             add_new_poag(poag_json_n9, "");    
+              var poag_json_n9 = document.getElementById("n9").innerHTML; // Copy and paste the multi_poag_string.txt here
+              add_new_poag(poag_json_n9, "");
+
+	    //marginal poags
+	      var marginal1 = document.getElementById("n1_marginal").innerHTML;   
+	      var marginal2 = document.getElementById("n9_marginal").innerHTML; 
+	      //add_new_poag(marginal1, "");
+	      //add_new_poag(marginal2, "");
+
+	    //extra joint poags
+	      var joint4 = document.getElementById("n15").innerHTML;
+	      var joint5 = document.getElementById("n17").innerHTML;
+	      add_new_poag(joint4, "");
+	      add_new_poag(joint5, "");
             
             //------------- Draw --------------------------------------//
             display();
@@ -69,5 +76,16 @@ and open the template in the editor.
             // merge_poag.js file in the js folder.
             
         </script>
+
+	<script src="js/merge_poag.js"></script>
+
+	<script>
+	// uncomment for a fourth one
+              add_new_poag(newGraph, "");    
+            
+            //------------- Draw --------------------------------------//
+            display();
+	</script>
+
     </body>
 </html>

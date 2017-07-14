@@ -34,12 +34,16 @@ setup_main_poag = function (graph) {
         if (node.seq.chars.length > max_seq_len) {
             max_seq_len = node.seq.chars.length;
         }
-        node.graph = {};
-        if (mutants > 0) {
-            node.graph.bars = node.mutants.chars;
-        } else {
-            node.graph.bars = node.seq.chars;
-        }
+
+	formatMutants(node, poag);
+	/*if (node.type != "fused"){
+            node.graph = {};
+            if (mutants > 0) {
+                node.graph.bars = node.mutants.chars;
+            } else {
+                node.graph.bars = node.seq.chars;
+            }
+	}*/
         nodes.push(node);
         node_dict["root" + "-" + node.id] = node;
     }
@@ -119,12 +123,8 @@ add_poag = function (graph, poag, name) {
         }
         // Add the type to the node so we know whether or not to draw the distributions
         node.type = poag.metadata.type;
-        node.graph = {};
-        if (mutants > 0) {
-            node.graph.bars = node.mutants.chars;
-        } else {
-            node.graph.bars = node.seq.chars;
-        }
+	formatMutants(node, poag);
+
         node.inferred = true;
         node.many_edges = false;
         // Update to say that it hasn't been deleted since it appears in both
@@ -138,6 +138,31 @@ add_poag = function (graph, poag, name) {
     graph.all_nodes = nodes;
     graph.node_dict = node_dict;
     return graph;
+}
+
+function formatMutants(node, poag){
+
+    if (node.type != "fused"){
+	node.graph = {};
+        if (mutants > 0) {
+            node.graph.bars = node.mutants.chars;
+        } else {
+            node.graph.bars = node.seq.chars;
+        }
+    } else {
+	//adding number of poags fused
+	node.npoags = poag.metadata.npoags;
+
+	node["subtype"] = poag.metadata.subtype;
+	
+	//changing graph if fused marginal graph
+	if (node.subtype == "marginal"){
+		
+	    node.graph = {};
+	    node.graph.bars = node.mutants.chars;
+
+	}
+    }
 }
 
 
